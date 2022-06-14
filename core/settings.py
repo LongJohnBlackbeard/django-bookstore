@@ -5,12 +5,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-nq+^-&r69a91!ql*fl$wbeepguzhf6zyyf6(u4&iymy##=i6+a'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG')) == "1" # 1 == True
+True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost']
 
 
 INSTALLED_APPS = [
