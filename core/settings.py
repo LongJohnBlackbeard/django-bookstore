@@ -1,17 +1,15 @@
 import os
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-DEBUG = str(os.environ.get('DEBUG')) == "1" # 1 == True
-True
+DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", 'localhost']
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', 'yourdomain.com']
 
 
 INSTALLED_APPS = [
