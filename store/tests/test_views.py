@@ -1,4 +1,4 @@
-# from unittest import skip
+from unittest import skip
 
 from django.contrib.auth.models import User
 from django.http import HttpRequest
@@ -8,10 +8,10 @@ from django.urls import reverse
 from store.models import Category, Product
 from store.views import product_all
 
-# @skip("demonstrating skipping")
-# class TestSkip(TestCase):
-#     def test_skip_example(self):
-#         pass
+@skip("demonstrating skipping")
+class TestSkip(TestCase):
+    def test_skip_example(self):
+        pass
 
 
 class TestViewResponses(TestCase):
@@ -50,6 +50,7 @@ class TestViewResponses(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_functions(self):
+        """Example: Using request factory"""
         request = self.factory.get('/item/django-beginners')
         response = product_all(request)
         html = response.content.decode('utf8')
