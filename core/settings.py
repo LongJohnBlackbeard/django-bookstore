@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'basket',
     'account',
     'phone_field',
+    'payment',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +108,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 COUNTRIES_FLAG_URL = os.path.join(STATIC_URL, 'flags/{code}_16.png')
 
+# Basket session ID
+BASKET_SESSION_ID = 'basket'
+
 # Custom user model
 AUTH_USER_MODEL = 'account.UserBase'
 LOGIN_REDIRECT_URL = '/account/dashboard'
@@ -115,3 +120,9 @@ PASSWORD_RESET_TIMEOUT_DAYS = 2
 
 # Email Setting
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Stripe Payment
+PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
+# stripe listen --forward-to localhost:8000/payment/webhook/

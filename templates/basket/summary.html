@@ -35,7 +35,7 @@
           </div>
           <div class="text-end">
             
-            <div class="">Sub Total: <span class="fw-bold">$</span><div id="subtotal" class="d-inline-flex fw-bold">{{basket.get_subtotal_price}}</div></div>
+            <div class="">Subtotal: <span class="fw-bold">$</span><div id="subtotal" class="d-inline-flex fw-bold">{{basket.get_subtotal_price}}</div></div>
             <div id="">Shipping <span class="small">(Next day delivery)</span>: <span class="fw-bold">$11.50</span></div>
             <div class="pt-2">Total to pay: <span class="fw-bold h5">$</span><span id="total" class="fw-bold h5">{{basket.get_total_price}}</span></div>
             
@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-5 col-lg-4 order-md-last p-0 order-3">
           <div class="d-grid gap-2 ">
-            <a role="button" href="" class="btn btn-success fw-bold" type="button">Checkout</a>
+            <a role="button" href="{% url "payment:basket" %}" class="btn btn-success fw-bold" type="button">Checkout</a>
             <button class="btn btn-light" type="button">Save for later</button>
           </div>
         </div>
@@ -100,9 +100,19 @@
             },
             success: function (json) {
                 $('.product-item[data-index="' + prodid + '"]').remove();
-                document.getElementById('basket_qty').innerHTML = json.qty;
-                document.getElementById('basket_total').innerHTML = json.total;
-                document.getElementById('subtotal').innerHTML = json.total;           
+
+                if(json.qty == 0){
+                  total = 0
+                  subtotal = 0
+                }
+                else{
+                  total = (parseFloat(json.subtotal) + 11.50).toFixed(2);
+                  subtotal = json.subtotal
+                }
+
+                document.getElementById('basket-qty').innerHTML = json.qty;
+                document.getElementById('total').innerHTML = json.total;
+                document.getElementById('subtotal').innerHTML = subtotal;           
             },
             error: function (xhr, errmsg, err) {}
         });
@@ -122,9 +132,10 @@
                 action: 'post'
             },
             success: function (json) {
-                document.getElementById('basket_qty').innerHTML = json.qty;
-                document.getElementById('basket_total').innerHTML = json.total;
-                document.getElementById('subtotal').innerHTML = json.total;
+                total = (parseFloat(json.subtotal) + 11.50).toFixed(2)
+                document.getElementById('basket-qty').innerHTML = json.qty;
+                document.getElementById('total').innerHTML = total;
+                document.getElementById('subtotal').innerHTML = json.subtotal;
                 
             },
             error: function (xhr, errmsg, err) {}

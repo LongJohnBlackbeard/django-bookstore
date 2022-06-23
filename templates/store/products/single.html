@@ -90,8 +90,8 @@
                 action: 'post'
             },
             success: function (json) {
-                document.getElementById('basket_qty').innerHTML = json.qty,
-                    document.getElementById('basket_total').innerHTML = json.total
+                document.getElementById('basket-qty').innerHTML = json.qty,
+                document.getElementById('basket_total').innerHTML = json.total
             },
             error: function (xhr, errmsg, err) {}
         });

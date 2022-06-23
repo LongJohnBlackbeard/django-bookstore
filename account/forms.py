@@ -1,10 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm, SetPasswordForm)
-from django_countries.fields import CountryField
+from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
+                                       SetPasswordForm)
 from django_countries.widgets import CountrySelectWidget
 
 from .models import UserBase
-from phone_field import PhoneField
 
 
 class UserLoginForm(AuthenticationForm):
@@ -75,7 +74,8 @@ class UserEditForm(forms.ModelForm):
 
     user_name = forms.CharField(
         label='Username', min_length=5, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Username', 'id': 'form-firstname', 'readonly': 'readonly'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'Username',
+                   'id': 'form-firstname', 'readonly': 'readonly'}))
 
     first_name = forms.CharField(
         label='First Name', min_length=3, max_length=50, widget=forms.TextInput(
@@ -109,7 +109,8 @@ class UserEditForm(forms.ModelForm):
         model = UserBase
         fields = {'email', 'user_name', 'first_name', 'country', 'phone_number',
                   'postcode', 'address_line_1', 'address_line_2', 'town_city', 'town_city'}
-        widgets = {'country': CountrySelectWidget(layout='{widget}<img class="country-select-flag" id="{flag_id}" style="margin: 6px 4px 0" src="{country.flag}"><br/>', attrs={'class': 'form-control'})
+        widgets = {'country': CountrySelectWidget(layout='{widget}<img class="country-select-flag" id="{flag_id}" style="margin: 6px 4px 0" src="{country.flag}"><br/>',
+                                                  attrs={'class': 'form-control'})
                    }
 
     def __init__(self, *args, **kwargs):

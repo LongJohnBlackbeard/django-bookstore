@@ -1,7 +1,7 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
+from account.models import UserBase
 from store.models import Category, Product
 
 
@@ -31,7 +31,7 @@ class TestCategoriesModel(TestCase):
 class TestProductsModel(TestCase):
     def setUp(self):
         Category.objects.create(name='django', slug='django')
-        User.objects.create(username='admin')
+        UserBase.objects.create(email='superuser@user.com')
         self.data1 = Product.objects.create(category_id=1, title='django beginners', created_by_id=1,
                                             slug='django-beginners', price='20.00', image='django')
         self.data2 = Product.products.create(category_id=1, title='django advanced', created_by_id=1,

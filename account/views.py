@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
+from orders.views import user_orders
+
 from .forms import RegistrationForm, UserEditForm
 from .models import UserBase
 from .token import account_activation_token
@@ -14,7 +16,9 @@ from .token import account_activation_token
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/users/dashboard.html')
+    orders = user_orders(request)
+    return render(request, 'account/users/dashboard.html', {'orders': orders})
+
 
 @login_required
 def edit_details(request):
@@ -28,13 +32,15 @@ def edit_details(request):
 
     return render(request, 'account/users/edit_details.html', {'user_form': user_form})
 
+
 @login_required
 def delete_user(request):
     user = UserBase.objects.get(user_name=request.user)
-    user.is_active =False
+    user.is_active = False
     user.save()
     logout((request))
     return redirect('account:delete_confirmation')
+
 
 def account_register(request):
 
