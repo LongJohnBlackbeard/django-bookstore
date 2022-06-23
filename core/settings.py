@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store',
     'basket',
+    'account',
+    'phone_field',
 ]
 
 MIDDLEWARE = [
@@ -101,3 +103,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+COUNTRIES_FLAG_URL = os.path.join(STATIC_URL, 'flags/{code}_16.png')
+
+# Custom user model
+AUTH_USER_MODEL = 'account.UserBase'
+LOGIN_REDIRECT_URL = '/account/dashboard'
+LOGIN_URL = '/account/login/'
+
+PASSWORD_RESET_TIMEOUT_DAYS = 2
+
+# Email Setting
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
