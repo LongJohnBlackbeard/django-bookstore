@@ -79,7 +79,7 @@ class UserEditForm(forms.ModelForm):
 
     first_name = forms.CharField(
         label='First Name', min_length=3, max_length=50, widget=forms.TextInput(
-            attrs={'class': 'form-control mb-3', 'placeholder': 'Firstname', 'id': 'form-lastname'}))
+            attrs={'class': 'form-control mb-3', 'placeholder': 'First Name', 'id': 'form-lastname'}))
 
     # country =  CountryField().formfield(
     #     widget=CountrySelectWidget(

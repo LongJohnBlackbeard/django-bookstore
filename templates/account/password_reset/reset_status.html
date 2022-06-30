@@ -1,0 +1,32 @@
+{% extends "../sub_base.html" %}
+{% block title %}Reset Status{% endblock %}
+{% block sub_content %}
+
+{% if request.user.as_authenticated %}
+<script>
+    window.location.href = '{% url "account:dashboad" %}';
+</script>
+{% endif %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-6 mx-auto">
+            <div class="p-4 align-items-center">
+                {% if 'email' in request.get_full_path %}
+                <h3 class="mb-4 text-center">Password Reset Success</h3>
+                <p class="text-center">Check your email for instructions</p>
+                {% endif %}
+                {% if 'complete' in request.get_full_path %}
+                <h3 class="mb-4 text-center">Password Reset Success</h3>
+                <p class="text-center"><a href="{% url "account:login" %}">Login</a></p>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,10 +1,18 @@
 import os
+import environ
 from pathlib import Path
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 
 DEBUG = True
@@ -122,7 +130,7 @@ PASSWORD_RESET_TIMEOUT_DAYS = 2
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Stripe Payment
-PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_ENDPOINT_SECRET = os.environ.get('STRIPE_ENDPOINT_SECRET')
+STRIPE_PUBLISHABLE_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_ENDPOINT_SECRET = env('STRIPE_ENDPOINT_SECRET')
 # stripe listen --forward-to localhost:8000/payment/webhook/
