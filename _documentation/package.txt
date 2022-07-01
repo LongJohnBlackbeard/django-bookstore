@@ -1,0 +1,11 @@
+Package List
+###
+
+django
+black
+isort
+mptt
+Pillow
+stripe
+coverage
+six
