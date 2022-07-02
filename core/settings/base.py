@@ -31,9 +31,9 @@ INSTALLED_APPS = [
     "basket",
     "account",
     "phone_field",
-    "payment",
     "orders",
     "mptt",
+    "checkout",
 ]
 
 MIDDLEWARE = [
@@ -128,8 +128,4 @@ PASSWORD_RESET_TIMEOUT_DAYS = 2
 # Email Setting
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Stripe Payment
-STRIPE_PUBLISHABLE_KEY = env("STRIPE_PUBLIC_KEY")
-STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
-STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
-# stripe listen --forward-to localhost:8000/payment/webhook/
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
