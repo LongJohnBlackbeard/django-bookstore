@@ -6,7 +6,47 @@ from django.contrib.auth.forms import (
 )
 from django_countries.widgets import CountrySelectWidget
 
-from .models import UserBase
+from .models import Address, Customer
+
+
+class UserAddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = [
+            "full_name",
+            "phone",
+            "country",
+            "address_line",
+            "address_line2",
+            "town_city",
+            "postcode",
+        ]
+        widgets = {
+            "country": CountrySelectWidget(
+                layout='{widget}<img class="country-select-flag" id="{flag_id}" style="margin: 6px 4px 0" src="{country.flag}"><br/>',
+                attrs={"class": "form-control"},
+            )
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["full_name"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "Full Name"}
+        )
+        self.fields["phone"].widget.attrs.update({"class": "form-control mb-2 account-form", "placeholder": "Phone"})
+        self.fields["address_line"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "1234 Main str"}
+        )
+        self.fields["address_line2"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "Apt 1"}
+        )
+        self.fields["town_city"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "Town/City"}
+        )
+        self.fields["postcode"].widget.attrs.update(
+            {"class": "form-control mb-2 account-form", "placeholder": "Zip/Postal Code"}
+        )
+        self.fields["address_line2"].required = False
 
 
 class UserLoginForm(AuthenticationForm):
@@ -21,7 +61,7 @@ class UserLoginForm(AuthenticationForm):
 
 class RegistrationForm(forms.ModelForm):
 
-    user_name = forms.CharField(label="Enter Username", min_length=5, max_length=50, help_text="Required")
+    name = forms.CharField(label="Enter Full Name", min_length=5, max_length=50, help_text="Required")
     email = forms.EmailField(
         max_length=100, help_text="Required", error_messages={"required": "Sorry, you will need an email."}
     )
@@ -29,18 +69,18 @@ class RegistrationForm(forms.ModelForm):
     password2 = forms.CharField(label="Repeat Password", widget=forms.PasswordInput)
 
     class Meta:
-        model = UserBase
+        model = Customer
         fields = (
-            "user_name",
+            "name",
             "email",
         )
 
     def clean_usernames(self):
-        user_name = self.cleaned_data["user_name"].lower()
-        r = UserBase.objects.filter(user_name=user_name)
+        name = self.cleaned_data["name"].lower()
+        r = Customer.objects.filter(name=name)
         if r.count():
             raise forms.ValidationError("Username already exists")
-        return user_name
+        return name
 
     def clean_password2(self):
         cd = self.cleaned_data
@@ -50,13 +90,13 @@ class RegistrationForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        if UserBase.objects.filter(email=email).exists():
+        if Customer.objects.filter(email=email).exists():
             raise forms.ValidationError("This email is already registered with an account.")
         return email
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["user_name"].widget.attrs.update({"class": "form-control mb-3", "placeholder": "Username"})
+        self.fields["name"].widget.attrs.update({"class": "form-control mb-3", "placeholder": "Username"})
         self.fields["email"].widget.attrs.update(
             {"class": "form-control mb-3", "placeholder": "E-mail", "name": "email", "id": "id_email"}
         )
@@ -74,26 +114,17 @@ class UserEditForm(forms.ModelForm):
         ),
     )
 
-    user_name = forms.CharField(
-        label="Username",
+    name = forms.CharField(
+        label="Full Name",
         min_length=5,
         max_length=50,
         widget=forms.TextInput(
             attrs={
                 "class": "form-control mb-3",
-                "placeholder": "Username",
+                "placeholder": "Full Name",
                 "id": "form-firstname",
                 "readonly": "readonly",
             }
-        ),
-    )
-
-    first_name = forms.CharField(
-        label="First Name",
-        min_length=3,
-        max_length=50,
-        widget=forms.TextInput(
-            attrs={"class": "form-control mb-3", "placeholder": "First Name", "id": "form-lastname"}
         ),
     )
 
@@ -146,11 +177,10 @@ class UserEditForm(forms.ModelForm):
     )
 
     class Meta:
-        model = UserBase
+        model = Customer
         fields = {
             "email",
-            "user_name",
-            "first_name",
+            "name",
             "country",
             "phone_number",
             "postcode",
@@ -168,7 +198,7 @@ class UserEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["user_name"].required = True
+        self.fields["name"].required = True
         self.fields["email"].required = True
         self.fields["address_line_2"].required = False
 
@@ -182,7 +212,7 @@ class PwdResetForm(PasswordResetForm):
 
     def clean_email(self):
         email = self.cleaned_data["email"]
-        u = UserBase.objects.filter(email=email)
+        u = Customer.objects.filter(email=email)
         if not u:
             raise forms.ValidationError("Unfortunatley we can not find that email address")
         return email
