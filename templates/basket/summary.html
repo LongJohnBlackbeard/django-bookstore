@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% block title %}Basket Summary{% endblock %}
 {% block content %}
 
@@ -69,7 +69,6 @@
             {% if image.is_feature %}
             <img class="img-fluid" alt="Responsive image" src="{{ image.image.url }}" alt="{{ image.image.alt_text }}">
             {% endif %}
-            {% endfor %}
           </div>
           <div class="col-md-10 ps-md-3">
             <div class="card-body p-1">
@@ -90,6 +89,7 @@
                 class="delete-button text-decoration-none small">Delete</a>
             </div>
           </div>
+          {% endfor %}
         </div>
       </div>
       {% endwith %}
