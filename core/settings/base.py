@@ -129,3 +129,7 @@ PASSWORD_RESET_TIMEOUT_DAYS = 2
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
+
+# Paypal
+PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
+PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
