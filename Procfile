@@ -1,0 +1,1 @@
+web: gunicorn dpt-django-store.wsgi
