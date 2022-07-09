@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import django_heroku
 import environ
 
 env = environ.Env(
@@ -15,7 +16,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "yourdomain.com"]
 
@@ -126,10 +127,18 @@ LOGIN_URL = "/account/login/"
 PASSWORD_RESET_TIMEOUT_DAYS = 2
 
 # Email Setting
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
 # Paypal
 PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
 PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
+
+# Heroku
+django_heroku.settings(locals())
