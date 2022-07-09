@@ -16,8 +16,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 
-DEBUG = True
-
+DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "yourdomain.com"]
 
 
@@ -142,4 +141,4 @@ PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
 PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
 
 # Heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
