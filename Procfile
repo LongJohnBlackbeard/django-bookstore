@@ -1,1 +1,1 @@
-web: gunicorn dpt-django-store.wsgi
+web: gunicorn django-ecom.wsgi
