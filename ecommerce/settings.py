@@ -142,5 +142,3 @@ PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
 
 # Heroku
 django_heroku.settings(locals())
-
-heroku config:set DISABLE_COLLECTSTATIC=1
