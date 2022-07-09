@@ -16,7 +16,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "yourdomain.com"]
 
@@ -105,8 +105,8 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -142,4 +142,4 @@ PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
 PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
 
 # Heroku
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
