@@ -71,8 +71,12 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("SECRET_KEY"),
+        "USER": env("SECRET_KEY"),
+        "PASSWORD": env("SECRET_KEY"),
+        "HOST": env("SECRET_KEY"),
+        "PORT": env("SECRET_KEY"),
     }
 }
 
