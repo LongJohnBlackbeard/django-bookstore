@@ -123,7 +123,7 @@ STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 DEFAULT_FILE_STORAGE = "core.custom_storages.MediaStore"
 
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), os.path.join(BASE_DIR, "media"))
 
 # MEDIA_URL = "/mediafiles/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
