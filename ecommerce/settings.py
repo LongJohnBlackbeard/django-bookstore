@@ -112,7 +112,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 USE_S3 = env("USE_S3") == "TRUE"
 
 if USE_S3:
-    AWS_DEFAULT_ACL = "public-read"
     # aws settings
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
