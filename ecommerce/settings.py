@@ -161,4 +161,4 @@ PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
 PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
 
 # Heroku
-django_heroku.settings(locals())
+django_heroku.settings(locals(), static_files=False)
