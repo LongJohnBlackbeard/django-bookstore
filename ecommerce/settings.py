@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "ecommerce.apps.orders",
     "mptt",
     "ecommerce.apps.checkout",
+    "storages",
 ]
 
 MIDDLEWARE = [
