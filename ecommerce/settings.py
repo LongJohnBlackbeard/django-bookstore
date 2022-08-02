@@ -119,21 +119,13 @@ AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 # s3 static settings
 AWS_LOCATION = "static"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+MEDIA_URL = STATIC_URL + "media/"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-DEFAULT_FILE_STORAGE = "core.custom_storages.MediaStorage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
-# MEDIA_URL = "/mediafiles/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
-
-# STATIC_URL = "/static/"
-
-# # STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 COUNTRIES_FLAG_URL = os.path.join(STATIC_URL, "flags/{code}_16.png")
 
