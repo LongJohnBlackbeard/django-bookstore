@@ -109,7 +109,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-USE_S3 = env("USE_S3") == "TRUE"
+USE_S3 = "TRUE"
 
 if USE_S3:
     # aws settings
