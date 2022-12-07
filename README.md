@@ -14,4 +14,4 @@ Styled with Bootstrap
 
 Paypal is set to sandbox mode. Thus any sandbox personal email and password will be able to work with this application.
 
-Testing banches
+
