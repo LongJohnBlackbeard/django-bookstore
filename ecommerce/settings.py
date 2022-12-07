@@ -11,13 +11,12 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+# environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = env("SECRET_KEY")
 
 
 DEBUG = False
-
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "yourdomain.com"]
 
 
@@ -35,6 +34,7 @@ INSTALLED_APPS = [
     "ecommerce.apps.orders",
     "mptt",
     "ecommerce.apps.checkout",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -72,8 +72,12 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -102,18 +106,26 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-STATIC_URL = "/static/"
-
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+# aws settings
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = os.environ["AWS_STORAGE_BUCKET_NAME"]
+AWS_DEFAULT_ACL = "public-read"
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+# s3 static settings
+AWS_LOCATION = "static"
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+MEDIA_URL = STATIC_URL + "media/"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
 
 COUNTRIES_FLAG_URL = os.path.join(STATIC_URL, "flags/{code}_16.png")
 
@@ -142,4 +154,4 @@ PAYPAL_CLIENT_KEY = env("PAYPAL_CLIENT_KEY")
 PAYPAL_SECRET_KEY = env("PAYPAL_SECRET_KEY")
 
 # Heroku
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)
